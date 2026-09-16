@@ -171,7 +171,7 @@ sub _bind_to {
 			$add_reader->($self);
 		}
 		if (bind $fh, $sockaddr) {
-			$self->{on_bind}->($self, $addr);
+			$self->{on_bind}->($self, $sockaddr);
 		}
 		else {
 			die "Could not bind: $!";
@@ -203,7 +203,7 @@ sub _connect_to {
 			$add_reader->($self);
 		}
 		if (connect $fh, $sockaddr) {
-			$self->{on_connect}->($self, $addr);
+			$self->{on_connect}->($self, $sockaddr);
 		}
 		else {
 			die "Could not connect: $!";
