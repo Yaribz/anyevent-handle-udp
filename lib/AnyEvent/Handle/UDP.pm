@@ -359,11 +359,11 @@ The callback for when an error occurs. It takes three arguments: the handle, a b
 
 =attr on_bind
 
-The callback for when the bind has been performed (this may be after object construction if address lookup is involved).
+The callback for when the bind has been performed (this may be after object construction if address lookup is involved). It takes two arguments: the handle and the address the socket has been bound to (packed sockaddr struct).
 
 =attr on_connect
 
-The callback for when the connect has been performed (this may be after object construction if address lookup is involved).
+The callback for when the connect has been performed (this may be after object construction if address lookup is involved). It takes two arguments: the handle and the address the socket was connected to (packed sockaddr struct).
 
 =attr on_drain
 
