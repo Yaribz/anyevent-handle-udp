@@ -232,11 +232,14 @@ sub _on_addr {
 
 	AnyEvent::Socket::resolve_sockaddr($host, $port, 'udp', $get_family->($self, $fh), Socket::SOCK_DGRAM, sub {
 		my @targets = @_;
+		$self->_error(1, "Could not resolve $host:$port") if not @targets;
+		my $failureReason;
 		while (@targets) {
 			my $target = shift @targets;
 			eval { $on_success->(@{$target}); 1 } and return;
+			$failureReason ||= $@;
 		}
-		$self->_error(1, "Could not resolve $host:$port")
+		$self->_error(1, $failureReason)
 	});
 	return;
 }
