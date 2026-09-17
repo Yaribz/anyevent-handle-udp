@@ -165,16 +165,16 @@ sub _bind_to {
 	my $bind_to = sub {
 		my ($domain, $type, $proto, $sockaddr) = @_;
 		if (!Scalar::Util::openhandle($fh)) {
-			socket $fh, $domain, $type, $proto or die "Could not create socket: $!";
+			socket $fh, $domain, $type, $proto or die "Could not create socket: $!\n";
 			AnyEvent::Util::fh_nonblocking $fh, 1;
-			setsockopt $fh, Socket::SOL_SOCKET, Socket::SO_REUSEADDR, 1 or die "Couldn't set so_reuseaddr: $!" if $self->{reuse_addr};
+			setsockopt $fh, Socket::SOL_SOCKET, Socket::SO_REUSEADDR, 1 or die "Couldn't set so_reuseaddr: $!\n" if $self->{reuse_addr};
 			$add_reader->($self);
 		}
 		if (bind $fh, $sockaddr) {
 			$self->{on_bind}->($self, $addr);
 		}
 		else {
-			die "Could not bind: $!";
+			die "Could not bind: $!\n";
 		}
 	};
 	if (ref $addr) {
@@ -198,7 +198,7 @@ sub _connect_to {
 	my $connect_to = sub {
 		my ($domain, $type, $proto, $sockaddr) = @_;
 		if (!Scalar::Util::openhandle($fh)) {
-			socket $fh, $domain, $type, $proto or die "Could not create socket: $!";
+			socket $fh, $domain, $type, $proto or die "Could not create socket: $!\n";
 			AnyEvent::Util::fh_nonblocking $fh, 1;
 			$add_reader->($self);
 		}
@@ -206,7 +206,7 @@ sub _connect_to {
 			$self->{on_connect}->($self, $addr);
 		}
 		else {
-			die "Could not connect: $!";
+			die "Could not connect: $!\n";
 		}
 	};
 	if (ref $addr) {
